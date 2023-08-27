@@ -1,0 +1,78 @@
+﻿@model SignInModel
+
+@{
+    string CurrentName = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+    switch (CurrentName)
+    {
+        case "ar":
+            Layout = "~/views/shared/_Layoutar.cshtml";
+            break;
+        default:
+            Layout = "~/views/shared/_Layout.cshtml";
+            break;
+    }
+    
+}
+
+
+
+    <form method="post">
+
+        <div>
+
+        @if(@ViewData["AlertMessage"] !=null){
+            @if (@ViewData["Status"] == "Success")
+            {
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          @ViewData["AlertMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+            @if (@ViewData["Status"] == "Error")
+            {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          @ViewData["AlertMessage"]
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            }
+
+        }
+        </div>
+
+        <div class="row mb-3 ms-1">
+            <div class="col-8">
+            <label class="form-label">@localizer["Email"]</label>
+            <input type="text" class="form-control" asp-for="Email" placeholder="@localizer["Email"]">
+                <span asp-validation-for="Email"></span>
+
+            </div>
+        </div>
+
+        <div class="row mb-3 ms-1">
+            <div class="col-8">
+            <label class="form-label">@localizer["Password"]</label>
+            <input type="password" class="form-control" asp-for="Password" placeholder="@localizer["Password"]">
+                <span asp-validation-for="Password"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3 ms-1">
+            <div class="col-8">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="RememberMe">
+                    <label class="form-check-label" >
+                    @localizer["Rememberme"]
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mb-3 ms-1">
+            <div class="col-8">
+            <input type="submit" value="@localizer["Login"]" class="btn btn-primary" asp-action="CheckPassword" />
+            </div>
+        </div>
+
+    </form>

@@ -1,0 +1,109 @@
+﻿@model PaginatedList<OrdersDTO>
+
+@section body
+
+    {
+    <form method="post">
+
+        <!-- Main content -->
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col m-2">
+                                        <h3 class="page-title">
+                                            Orders
+                                        </h3>
+                                    </div>
+                                    <div class="col-auto text-end float-auto ms-auto ">
+                                        <a type="submit" class="btn btn-primary" asp-action="NewOrder" asp-controller="Orders">Add</a>
+                                        <a type="submit" class="btn btn-primary" asp-action="Export" asp-controller="Orders">ExportExcel</a>
+                                    </div>
+
+                                </div>
+                          @*      <div class="row m-2">
+                                    <div class="col-lg-1-md-1-xs-1 m-2">
+                                        <h5> Product</h5>
+                                    </div>
+                                    <div class="col-lg-4-md-4-xs-4 m-2">
+                                        <input type="text" name="name" class="form-control" />
+                                    </div>
+                                    <div class="col-lg-2-md-2-xs-2 m-2">
+                                        <button type="submit" class="btn btn-primary  " asp-action="search">Search</button>
+                                    </div>
+
+                                </div>*@
+
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table id="example2" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>Product</th>
+                                                    <th>QTy</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (OrdersDTO item in Model.Items)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Customer.Name</td>
+                                                        <td>@item.Product.Name</td>
+                                                        <td>@item.Qty</td>
+                                                        <td>@item.Price</td>
+                                                        <td>
+                                                            <a style="margin-right: 5px;" asp-action="Edit" asp-route-Id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                                                            <a asp-action="Delete" asp-route-Id="@item.Id"><i class="fa-regular fa-trash-can"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination">
+                                                @if (Model.HasPreviousPage)
+                                                {
+                                                    <li class="page-item"><a class="page-link" asp-action="PagginatedList" asp-route-CurrentPage="@(Model.PageNumber-1)">Previous</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="page-item disabled"><a class="page-link" asp-action="PagginatedList" asp-route-CurrentPage="@(Model.PageNumber-1)">Previous</a></li>
+                                                }
+
+                                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                                {
+                                                    <li class="page-item"><a class="page-link" asp-action="PagginatedList" asp-route-CurrentPage="@i">@i</a></li>
+                                                }
+
+
+                                                @if (Model.HasNextPage)
+                                                {
+                                                    <li class="page-item"><a class="page-link" asp-action="PagginatedList" asp-route-CurrentPage="@(Model.PageNumber+1)">Next</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="page-item disabled"><a class="page-link" asp-action="PagginatedList" asp-route-CurrentPage="@(Model.PageNumber+1)">Next</a></li>
+                                                }
+
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+    <!-- /.content -->
+}

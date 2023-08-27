@@ -1,0 +1,337 @@
+﻿@using InventorySystem.Models
+@using InventorySystem.data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventory System</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/new folder/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" media="screen and (max-width: 600px)" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PJsj/BTMqILvmcej7ulplguok8ag4xFTPryRq8xevL7eBYSmpXKcbNVuy+P0RMgq" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/new folder/dist/css/adminltear.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/new folder/plugins/overlayScrollbars/css/OverlayScrollbarsar.css">
+
+    <script src="https://kit.fontawesome.com/eedaad3b2e.js" crossorigin="anonymous"></script>
+</head>
+
+
+<body class="hold-transition sidebar-mini layout-fixed" dir="rtl">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+            @{
+                var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+            }
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fas fa-globe"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">@localizer["Languages"]</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="~/Culture/setLanguage?culture=ar&returnUrl=@returnUrl" class="dropdown-item">
+                             @localizer["Arabic"]
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="~/Culture/setLanguage?culture=en&returnUrl=@returnUrl" class="dropdown-item">
+                            @localizer["English"]
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a asp-action ="Index" asp-controller="Home" class="brand-link">
+               @* <img src="dist/img/imageWhite.jpg" alt="Ticketing System" class="brand-image img-circle elevation-3"
+                     style="opacity: .8">*@
+                <span class="brand-text font-weight-light">@localizer["SystemName"]</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/@UserProfile.ProfileImage" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">@UserProfile.Name</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
+                            with font-awesome or any other icon font library -->
+                           
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Home" class="nav-link active">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            @localizer["Dashboard"]
+                                        </p>
+                                    </a>
+                                </li>
+                           
+                            @if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Customer" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-user-tag"></i>
+                                        <p>@localizer["Customer"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Category" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-tag"></i>
+                                        <p>@localizer["Category"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Stores" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-store"></i>
+                                        <p>@localizer["Stores"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Supplier" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-truck-field"></i>
+                                        <p>@localizer["Supplier"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Company" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-building"></i>
+                                        <p>@localizer["Company"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Orders" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                                        <p>@localizer["Orders"]</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Product" class="nav-link">
+                                        <i class="nav-icon fa-brands fa-product-hunt"></i>
+
+                                        <p>@localizer["Product"]</p>
+                                    </a>
+                                </li>
+                            }
+                            
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa fa-user-check"></i>
+                                        <p>@localizer["UserManagement"]</p>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Account" asp-action="UserList" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>@localizer["Users"]</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Account" asp-action="RoleList" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>@localizer["Roles"]</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a asp-action="Logout" asp-controller="Account" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-arrow-right-from-bracket"></i>
+                                    <p>@localizer["SignOut"]</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                    <!-- /.sidebar-menu -->
+                }
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+@*            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Dashboard</h1>
+                        </div><!-- /.col -->
+                     
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+
+                        </div>
+                      
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>*@
+            <!-- /.content-header -->
+            <!-- Main content -->
+                    <!-- Small boxes (Stat box) -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-body">
+                                            @RenderSection("body")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    <!-- /.row -->
+                    <!-- Main row -->
+                    <!-- Left col -->
+                  
+
+           @* <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12">
+
+                   
+                </div>
+            </div>
+            </div>*@
+
+            <!-- /.content -->
+        </div>
+        
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="maan-footer-bottom">
+                <div class="row flex-column-reverse flex-lg-row gx-0 align-items-center justify-content-center justify-content-lg-center">
+                    <div class="col-lg-5">
+                        <div class="footer-copyright text-center text-lg-start">
+                            <p>
+                                ©Copyright <a href="http://lengoacademy.com/" target="_blank">Lengo Academy</a> All
+                                rights
+                                reserved
+                                <script>
+                                    document.write(/\d{4}/.exec(Date())[0]);
+                                </script>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/new folder/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/new folder/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="~/new folder/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/new folder/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/new folder/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="~/new folder/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/new folder/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/new folder/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/new folder/plugins/moment/moment.min.js"></script>
+    <script src="~/new folder/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/new folder/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/new folder/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/new folder/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/new folder/dist/js/adminlte.js"></script>
+
+</body>
+
+</html>

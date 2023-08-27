@@ -1,0 +1,63 @@
+﻿@model List<RoleDTO>
+
+@{
+    ViewData["Title"] = "RoleList";
+}
+
+@section body
+
+    {
+    <form method="post">
+
+
+        <!-- Main content -->
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col m-2">
+                                        <h3 class="page-title">
+                                            Roles
+                                        </h3>
+                                    </div>
+                                    <div class="col-auto text-end float-auto ms-auto ">
+                                        <a type="submit" class="btn btn-primary" asp-action="NewRole" asp-controller="Account">Add</a>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table id="example2" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (RoleDTO item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Name</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </form>
+}

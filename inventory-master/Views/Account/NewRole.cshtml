@@ -1,0 +1,68 @@
+﻿@model RoleModel
+
+@{
+    ViewData["Title"] = "NewRole";
+    
+}
+
+@section Body{
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                                 @if(@ViewData["AlertMessage"] !=null){
+            @if (@ViewData["Status"] == "Success")
+            {
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          @ViewData["AlertMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+            @if (@ViewData["Status"] == "Error")
+            {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          @ViewData["AlertMessage"]
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            }
+
+        }
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"> Add New Role </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="Name" asp-for="Name">
+                                        <span asp-validation-for="Name"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+
+                                <input type="submit" class="btn btn-primary" asp-action="CreateRole" value="Save" />
+
+                                <input type="submit" class="btn btn-danger" asp-action="RoleList" value="Cancel" />
+                            </div>
+                            <!-- /.card-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+}

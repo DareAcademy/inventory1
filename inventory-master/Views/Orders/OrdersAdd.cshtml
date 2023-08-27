@@ -1,0 +1,133 @@
+﻿@using InventorySystem.Data.Enum;
+@model vmOrders
+
+
+
+
+@section body
+
+    {
+
+        <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+            
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $("#ddlProduct").change(function(){
+                debugger
+                $.ajax({
+                    type:'get',
+                    url: '/inventorySystemDemo1/Orders/GetProductInfo?ProductId='+$(this).val(),
+                    success:function(data){
+                        
+                        $("#Order_Price").val(data.buyingPrice);
+                    },
+                    error:function(err){
+                        
+                    }
+                })
+            })
+        })
+            
+        </script>
+        
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                                 @if(@ViewData["AlertMessage"] !=null){
+            @if (@ViewData["Status"] == "Success")
+            {
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          @ViewData["AlertMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+            @if (@ViewData["Status"] == "Error")
+            {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          @ViewData["AlertMessage"]
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            }
+
+        }
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Order </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post">
+                            <div class="card-body">
+                                <input type="hidden" asp-for="Order.Id">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Customer</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" asp-for="Order.Customer_Id" asp-items='new SelectList(Model.LiCustomer,"Id","Name")'>
+                                            <option>Select Customer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Product</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" asp-for="Order.Product_Id" id="ddlProduct" asp-items='new SelectList(Model.LiProduct,"Id","Name")'>
+                                            <option>Select Product</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> QTY</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" placeholder=" QTY" asp-for="Order.Qty">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Price</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" placeholder="Price" asp-for="Order.Price">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Discount</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" placeholder="Discount" asp-for="Order.Discount">
+                                    </div>
+                                </div>
+                              
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Payment Method</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" asp-for="Order.PaymentMethod" asp-items="Html.GetEnumSelectList<PaymentMethodType>()">
+                                            <option>Select Payment Method</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                @if ((bool)ViewData["IsEdit"] == true)
+                                {
+                                    <input type="submit" class="btn btn-primary" asp-action="Update" value="Update" />
+                                }
+                                else
+                                {
+                                    <input type="submit" class="btn btn-primary" asp-action="Save" value="Save" />
+                                }
+                                <input type="submit" class="btn btn-danger" asp-action="Index" value="Cancel" />
+                            </div>
+                            <!-- /.card-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+}

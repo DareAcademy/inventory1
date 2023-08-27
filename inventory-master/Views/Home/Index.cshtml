@@ -1,0 +1,95 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Dashboard
+
+@section body
+
+{
+<div class="row">
+            <div class="col-lg-11 m-4">
+              <div class="row">
+                
+
+
+                <div class="col-lg-4 col-6" onclick="window.location='/check-out.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                      <h4>@localizer["Users"]</h4>
+                      <p>@Model.TotalUsers</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-user-check" style="font-size:70px"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6" onclick="window.location='/admin/approved-tickets.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                            <h4>@localizer["Stores"]</h4>
+                      <p>@Model.TotalStores</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa-solid fa-store" style="font-size: 70px;"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+                                <div class="col-lg-4 col-6" onclick="window.location='/admin/approved-tickets.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                            <h4>@localizer["Products"]</h4>
+                      <p>@Model.TotalProducts</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa-solid fa-tag" style="font-size:70px"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6" onclick="window.location='/admin/approved-tickets.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                            <h4>@localizer["Supplier"]</h4>
+                      <p>@Model.TotalSupplier</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa-solid fa-truck-field" style="font-size:70px"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6" onclick="window.location='/admin/approved-tickets.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                            <h4>@localizer["Customers"]</h4>
+                      <p>@Model.TotalCustomers</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa-solid fa-user-tag" style="font-size:70px"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6" onclick="window.location='/admin/pending-approval-tickets.html';">
+                  <!-- small box -->
+                  <div class="small-box bg-gray">
+                    <div class="inner">
+                            <h4>@localizer["Sales"]</h4>
+                      <p>$ @Model.TotalSales</p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa-solid fa-cart-shopping" style="font-size: 70px;"></i>
+                    </div>
+                        <a class="small-box-footer">@localizer["Details"]</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      }

@@ -1,0 +1,13 @@
+﻿@{
+    string CurrentName = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+
+    switch (CurrentName)
+    {
+        case "ar":
+            Layout = "~/Views/Shared/InventoryLayoutar.cshtml";
+            break;
+        default:
+            Layout = "~/Views/Shared/InventoryLayout.cshtml";
+            break;
+    }
+}
